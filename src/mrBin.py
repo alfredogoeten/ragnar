@@ -156,6 +156,7 @@ def mrBinDirect(lang):
 
     removeFiles('strings')
     removeFiles('hexes')
+    removeFiles('md5')
 
 
 '''
