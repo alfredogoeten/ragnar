@@ -36,6 +36,10 @@ from utils import underName
 '''
 
 '''
+
+pathFolder = 'drivers/'
+extension = '.exe'
+
 def binExtract(fileName):
 	# Generate the file descriptor using the file name
 	with open(fileName, 'r') as outFile:
@@ -122,8 +126,6 @@ def mrBinMenu(lang):
 '''
 def mrBinDirect(lang):
 	# Get the file information
-	pathFolder = 'drivers/'
-	extension = '.exe'
 	fileName = raw_input(_("Nome do Arquivo (sem extensao): "))
 	fullName = pathFolder + fileName + extension
 	clear()
@@ -220,7 +222,7 @@ def findStrings(fileName,size):
 	print _('Analisando strings de tamanho minimo {}').format(size)
 
 	# Get the list with the printable strings
-	listResult = list(strings(fileName,size))
+	listResult = list(strings(pathFolder+fileName+extension,size))
 
 	# Save the list on a file
 	resultFile = 'strings-{}.txt'.format(fileName)
