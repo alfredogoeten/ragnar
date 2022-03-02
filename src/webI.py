@@ -409,7 +409,7 @@ def webIDirect(lang):
 	# FROMFD ERROR port = s.getpeername()[1]
 	
 	# Show the test basic information
-	print _('- Hora:\t\t') + req.headers['Date']
+	print _('- Hora:\t\t') + str(req.headers.get('Date'))
 	
 	# Get the target hostname information (IP, Port, Server )
 	if ':' in url:
@@ -549,4 +549,4 @@ def xss(url):
 		return (False,"")
 	
 if __name__ == '__main__':
-	webIMenu('pt')
+	webIMenu('en')
