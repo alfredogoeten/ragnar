@@ -147,7 +147,7 @@ def mrBinDirect(lang):
 	# [2] Finding printable strings on the bin file
 	printLine()
 	print '[2] '+ (_('Analise de Palavras Legiveis')) 
-	print findStrings(fullName,10)
+	print findStrings(fileName,10)
 
 	# [3] Dumphex data from the Bin file
 	printLine()
@@ -257,7 +257,6 @@ def compareMd5File(fileName,md5Value):
 
 	# Return a msg depending if the search was successful or not
 	return _('Arquivo encontrado!\n MD5: {}').format(md5Check) + buildResponse(md5Check == md5Value,_(' Valido '),_(' nao confere\n'))
-
 
 '''
 	Get all printable characters of a file given a minimum size (simulates strings command)
