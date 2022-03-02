@@ -122,15 +122,18 @@ def mrBinMenu(lang):
 '''
 def mrBinDirect(lang):
 	# Get the file information
-	fileName = 'drivers/' + raw_input(_("Nome do Arquivo (sem extensao): ")) + '.exe'
+	pathFolder = 'drivers/'
+	extension = '.exe'
+	fileName = raw_input(_("Nome do Arquivo (sem extensao): "))
+	fullName = pathFolder + fileName + extension
 	clear()
 
 	# Print the file type
-	print bcolors.BOLD + _('Arquivo \'{}\'').format(underName(fileName)) + bcolors.ENDC
-	print _('Tipo: ') + getType(fileName)
+	print bcolors.BOLD + _('Arquivo \'{}\'').format(underName(fileName+extension)) + bcolors.ENDC
+	print _('Tipo: ') + getType(fullName)
 
 	# Print the md5 value
-	md5Value = md5sum(fileName)
+	md5Value = md5sum(fullName)
 	print _('MD5 signature: ') + md5Value
 
 	## TEST SECTION
@@ -144,17 +147,17 @@ def mrBinDirect(lang):
 	# [2] Finding printable strings on the bin file
 	printLine()
 	print '[2] '+ (_('Analise de Palavras Legiveis')) 
-	print findStrings(fileName,10)
+	print findStrings(fullName,10)
 
 	# [3] Dumphex data from the Bin file
 	printLine()
 	print '[3] '+ (_('Executando Hex Dump no firmware'))
-	print dumpFileContent(fileName)
+	print dumpFileContent(fullName)
 
 	# [4] Tentativa de extracao do sistema de arquivos
 	printLine()
 	print '[4] '+ (_('Tentativa de Extracao do Sistema de Arquivos'))
-	print binExtract(fileName)
+	print binExtract(fullName)
 	pause()
 
 '''
