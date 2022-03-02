@@ -557,7 +557,7 @@ class SSLSocket(socket):
         if sock.getsockopt(SOL_SOCKET, SO_TYPE) != SOCK_STREAM:
             raise NotImplementedError("only stream sockets are supported")
         socket.__init__(self, _sock=sock._sock)
-        # The initializer for socket overrides the methods send(), recv(), etc.
+        # The initializer for socket overrides the methods send(), recv(), drivers.
         # in the instancce, which we don't need -- but we want to provide the
         # methods defined in SSLSocket.
         for attr in _delegate_methods:

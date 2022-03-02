@@ -19,7 +19,8 @@
 	### This will avoid the ICMP function errors
 '''
 
-import gettext, logging, random, requests, subprocess, socket, ssl, string, sys, threading, time, urllib
+import gettext, logging, random, requests, subprocess, socket, ssl, string, sys, threading, time, urllib, subprocess
+
 
 from urlparse import urlparse
 from datetime import datetime
@@ -416,7 +417,7 @@ def portScanner(lang, server, ignoreFilter, portRange, scanCommon, showMsg):
 
 def netServDirect(lang):
     # Try to connect to the website
-    url = raw_input(_("Endereco da interface para teste: "))
+    url = raw_input(_("Endereco da interface para teste (sem a porta): "))
     parsed = urlparse(url)
     if len(parsed.netloc) == 0:
         parsed = urlparse('http://' + url)

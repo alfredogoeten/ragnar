@@ -76,8 +76,7 @@ def md5sum(fileName):
 '''
 def getType(fileName):
 
-	typeF = magic.Magic(mime=True, uncompress=True, magic_file="Magics\magic.mgc")
-	return str(typeF.from_file(fileName))
+	return magic.from_file(fileName)
 	
 '''
 	Show a basic menu 
@@ -123,7 +122,7 @@ def mrBinMenu(lang):
 '''
 def mrBinDirect(lang):
 	# Get the file information
-	fileName = raw_input(_("Arquivo: "))
+	fileName = 'driver/' + raw_input(_("Nome do Arquivo (sem extensão): ")) + '.exe'
 	clear()
 
 	# Print the file type
