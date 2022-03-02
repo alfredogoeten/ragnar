@@ -108,7 +108,7 @@ def mrBinMenu(lang):
 	
 '''
 def removeFiles(folder):
-	files = glob.glob(pathFolder + folder+'/*')
+	files = glob.glob(pathFolder + folder +'/*')
 	for f in files:
 		os.remove(f)
 
@@ -151,10 +151,8 @@ def mrBinDirect(lang):
     print binExtract(fileName)
 
     pause()
-
-	removeFiles('strings')
-	removeFiles('hexes')
-
+removeFiles('strings')
+removeFiles('hexes')
 
 '''
 	Get the file content, convert to a readable hexadecimal format and dump the result on a new file
