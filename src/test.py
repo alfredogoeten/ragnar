@@ -65,9 +65,9 @@ def makeGET(url):
     print '*************************'
     return result
 
-headersFile = sys.argv[1] if len(sys.argv) >= 2 else 'headers.txt'
+headersData = sys.argv[1] if len(sys.argv) >= 2 else 'headersData.txt'
 
-inputFileLines = open(headersFile, 'r').read()
+inputFileLines = open(headersData, 'r').read()
 requestNumber = 0
 
 
@@ -185,4 +185,4 @@ try:
   
   fsalida.close()
 except: 
-pass
+    pass

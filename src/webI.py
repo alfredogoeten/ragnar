@@ -10,7 +10,8 @@
 
 #!/usr/bin/python
 from __future__ import absolute_import
-import re, sys, gettext, requests, socket, ssl, urllib2, urllib3, BeautifulSoup, mechanize
+from bs4 import BeautifulSoup
+import re, sys, gettext, requests, socket, ssl, urllib2, urllib3, mechanize
 from crawler import Crawler, CrawlerCache
 
 #Utils Functions
@@ -205,7 +206,7 @@ def showInf(lang):
 	print (_("Interfaces"))
 	def_gw_device = netifaces.gateways()['default'][netifaces.AF_INET][1]
 	print def_gw_device
-	macaddr = netifaces.ifaddresses('enp0s25')[netifaces.AF_LINK][0]['addr']
+	macaddr = netifaces.ifaddresses('eth0')[netifaces.AF_LINK][0]['addr']
 	print macaddr
 	pause()
 
