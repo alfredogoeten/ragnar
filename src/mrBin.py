@@ -96,8 +96,6 @@ def mrBinMenu(lang):
         print(_('Firmware Pentest'))
         opt = int(raw_input(_("0 - Voltar para o Menu Principal\n1 - Verificar Arquivo de Firmware\n")))
         if opt == 0:
-			removeFiles('strings')
-			removeFiles('hexes')
 			return
         if opt in menuOpts:
             subModule[menuOpts[opt]](lang)
@@ -151,7 +149,11 @@ def mrBinDirect(lang):
     printLine()
     print '[4] ' + (_('Tentativa de Extracao do Sistema de Arquivos'))
     print binExtract(fileName)
+
     pause()
+
+	removeFiles('strings')
+	removeFiles('hexes')
 
 
 '''
