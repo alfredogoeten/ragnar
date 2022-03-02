@@ -256,7 +256,7 @@ def compareMd5File(fileName,md5Value):
 		return _('Arquivo nao encontrado!')
 
 	# Return a msg depending if the search was successful or not
-	return _('Arquivo encontrado!\n MD5: {}').format(md5Check) + buildResponse(md5check == md5Value,_(' Valido '),_(' nao confere\n'))
+	return _('Arquivo encontrado!\n MD5: {}').format(md5Check) + buildResponse(md5Check == md5Value,_(' Valido '),_(' nao confere\n'))
 
 
 '''
