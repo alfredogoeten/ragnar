@@ -38,7 +38,6 @@ from utils import underName
 '''
 
 pathFolder = 'drivers/'
-extension = '.exe'
 
 def binExtract(fileName):
 	# Generate the file descriptor using the file name
@@ -126,12 +125,12 @@ def mrBinMenu(lang):
 '''
 def mrBinDirect(lang):
 	# Get the file information
-	fileName = raw_input(_("Nome do Arquivo (sem extensao): "))
-	fullName = pathFolder + fileName + extension
+	fileName = raw_input(_("Nome do Arquivo (com extensao): "))
+	fullName = pathFolder + fileName
 	clear()
 
 	# Print the file type
-	print bcolors.BOLD + _('Arquivo \'{}\'').format(underName(fileName+extension)) + bcolors.ENDC
+	print bcolors.BOLD + _('Arquivo \'{}\'').format(underName(fileName)) + bcolors.ENDC
 	print _('Tipo: ') + getType(fullName)
 
 	# Print the md5 value
@@ -143,8 +142,9 @@ def mrBinDirect(lang):
 	# [1] Verify the MD5 signature with a MD5 file
 	printLine()
 	print '[1] '+ (_('Verificacao do MD5'))
-	print _('Procurando arquivo \'{}\'').format(underName(pathFolder+fileName+'.md5'))
-	print compareMd5File(pathFolder+fileName+'.md5',md5Value)
+	md5File = pathFolder+'md5/'+fileName+'.md5'
+	print _('Procurando arquivo \'{}\'').format(underName(md5File))
+	print compareMd5File(md5File,md5Value)
 
 	# [2] Finding printable strings on the bin file
 	printLine()
@@ -154,12 +154,12 @@ def mrBinDirect(lang):
 	# [3] Dumphex data from the Bin file
 	printLine()
 	print '[3] '+ (_('Executando Hex Dump no firmware'))
-	print dumpFileContent(fullName)
+	print dumpFileContent(fileName)
 
 	# [4] Tentativa de extracao do sistema de arquivos
 	printLine()
 	print '[4] '+ (_('Tentativa de Extracao do Sistema de Arquivos'))
-	print binExtract(fullName)
+	print binExtract(fileName)
 	pause()
 
 '''
@@ -167,13 +167,13 @@ def mrBinDirect(lang):
 '''
 def dumpFileContent(fileName):
 	# Get the file content
-	fileContent = readFile(fileName)
+	fileContent = readFile(pathFolder+fileName)
 
 	# Convert the content of the file to a readable hex format
 	hexContent = hexdump(fileContent)
 
 	# Dump the result on a new file
-	resultFile = 'hex-{}.txt'.format(fileName)
+	resultFile = pathFolder+ 'hex/{}.txt'.format(fileName)
 	saveList(resultFile,hexContent)
 
 	# Return the result
@@ -222,10 +222,10 @@ def findStrings(fileName,size):
 	print _('Analisando strings de tamanho minimo {}').format(size)
 
 	# Get the list with the printable strings
-	listResult = list(strings(pathFolder+fileName+extension,size))
+	listResult = list(strings(pathFolder+fileName,size))
 
 	# Save the list on a file
-	resultFile = 'strings-{}.txt'.format(fileName)
+	resultFile = pathFolder+'strings/{}.txt'.format(fileName)
 	saveList(resultFile,listResult)
 
 	# Return the result
@@ -236,11 +236,11 @@ def findStrings(fileName,size):
 '''
 def saveList(fileName,listSource):
 	# Open the file
-	thefile = open(fileName, 'w')
+	file = open(fileName, 'w')
 	
 	# Save each item on a line
 	for item in listSource:
-		thefile.write("%s\n" % item)
+		file.write("%s\n" % item)
 
 	return True
 
