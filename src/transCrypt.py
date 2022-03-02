@@ -44,7 +44,7 @@ from OpenSSL.SSL import Context, Connection
 from OpenSSL.SSL import SSLv2_METHOD, SSLv3_METHOD, SSLv23_METHOD, TLSv1_METHOD, TLSv1_1_METHOD, TLSv1_2_METHOD
 from OpenSSL.SSL import Error as openSSLError
 
-# PROTOCOL_SSLv3, PROTOCOL_TLSv1, PROTOCOL_TLSv1_1, PROTOCOL_TLSv1_2
+# PROTOCOL_TLSv1, PROTOCOL_TLSv1_1, PROTOCOL_TLSv1_2
 methods = {
 	ssl.PROTOCOL_TLSv1_2:TLSv1_2_METHOD,
 	ssl.PROTOCOL_TLSv1_1:TLSv1_1_METHOD,
@@ -65,18 +65,11 @@ pfsCipherList = {
 "ECDHE-RSA-AES256-GCM-SHA384":TLSv1_2_METHOD,
 "ECDHE-RSA-AES128-GCM-SHA256":TLSv1_2_METHOD,
 "ECDHE-RSA-AES128-SHA256":TLSv1_2_METHOD,
-"ECDHE-RSA-RC4-SHA":SSLv3_METHOD,
 "DHE-RSA-AES256-GCM-SHA384":TLSv1_2_METHOD,
 "DHE-RSA-AES256-SHA256":TLSv1_2_METHOD,
-"DHE-RSA-AES256-SHA":SSLv3_METHOD,
-"DHE-RSA-CAMELLIA256-SHA":SSLv3_METHOD,
 "DHE-RSA-AES128-GCM-SHA256":TLSv1_2_METHOD,
 "DHE-RSA-AES128-SHA256":TLSv1_2_METHOD,
-"DHE-RSA-AES128-SHA":SSLv3_METHOD,
-"DHE-RSA-CAMELLIA128-SHA":SSLv3_METHOD,
 "ECDHE-RSA-AES256-SHA384":TLSv1_2_METHOD,
-"ECDHE-RSA-AES256-SHA":SSLv3_METHOD,
-"ECDHE-RSA-AES128-SHA":SSLv3_METHOD,
 } # DHE-RSA-SEED-SHA ECDHE-RSA-RC4-SHA - Just commenting for further test implementation
 
 '''
@@ -354,12 +347,6 @@ def testProtocols(lang,url,port):
 	print _('- SSLv2') + "\t\t" + protocolAnalysis(True,False,statusFlag)
 	if statusFlag:
 		protocolList.append(ssl.PROTOCOL_SSLv2)
-
-	# Test the url for the SSLv3 protocol and analyse the result
-	statusFlag = verifyProtocol(url,port,ssl.PROTOCOL_SSLv3)
-	print _('- SSLv3') + "\t\t" + protocolAnalysis(True,False,statusFlag)
-	if statusFlag:
-		protocolList.append(ssl.PROTOCOL_SSLv3)
 
 	# Test the url for the TLSv1 protocol and analyse the result
 	statusFlag = verifyProtocol(url,port,ssl.PROTOCOL_TLSv1)
