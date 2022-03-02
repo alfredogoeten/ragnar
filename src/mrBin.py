@@ -256,12 +256,8 @@ def compareMd5File(fileName,md5Value):
 		return _('Arquivo nao encontrado!')
 
 	# Return a msg depending if the search was successful or not
-	return _('Arquivo encontrado!\n MD5: {}').format(md5Check) + buildResponse(fileName == md5Value,_(' Valido '),_(' nao confere\n'))
+	return _('Arquivo encontrado!\n MD5: {}').format(md5Check) + buildResponse(md5check == md5Value,_(' Valido '),_(' nao confere\n'))
 
-		
-
-	
-	return buildResponse(fileFound)
 
 '''
 	Get all printable characters of a file given a minimum size (simulates strings command)
