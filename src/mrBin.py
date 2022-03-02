@@ -122,7 +122,7 @@ def mrBinMenu(lang):
 '''
 def mrBinDirect(lang):
 	# Get the file information
-	fileName = 'driver/' + raw_input(_("Nome do Arquivo (sem extensao): ")) + '.exe'
+	fileName = 'drivers/' + raw_input(_("Nome do Arquivo (sem extensao): ")) + '.exe'
 	clear()
 
 	# Print the file type
