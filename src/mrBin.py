@@ -1,11 +1,11 @@
 '''
-	
-	#### For this module to work, you will need to:
 
-	1 - Install python-magic
-		https://github.com/ahupp/python-magic
+    #### For this module to work, you will need to:
 
-	####
+    1 - Install python-magic
+        https://github.com/ahupp/python-magic
+
+    ####
 '''
 
 import hashlib, magic, shutil, string, uefi_firmware, os, shutil
@@ -41,7 +41,7 @@ def binExtract(fileName):
 
 
 '''
-	Check the MD5 of a file (simulates md5sum command)
+    Check the MD5 of a file (simulates md5sum command)
 '''
 
 
@@ -54,16 +54,16 @@ def md5sum(fileName):
 
 
 '''
-	Get the type of a file (simulates File command)
+    Get the type of a file (simulates File command)
 '''
 
 
 def getType(fileName):
-	return magic.from_file(fileName)
+    return magic.from_file(fileName)
 
 
 '''
-	Show a basic menu 
+    Show a basic menu 
 '''
 
 
@@ -96,7 +96,7 @@ def mrBinMenu(lang):
         print(_('Firmware Pentest'))
         opt = int(raw_input(_("0 - Voltar para o Menu Principal\n1 - Verificar Arquivo de Firmware\n")))
         if opt == 0:
-			return
+            return
         if opt in menuOpts:
             subModule[menuOpts[opt]](lang)
         else:
@@ -105,14 +105,14 @@ def mrBinMenu(lang):
 
 
 '''
-	
+    
 '''
 def removeFiles(folder):
-	for root, dirs, files in os.walk('/home/kali/Desktop/ragnar/src/drivers/' + folder):
-		for f in files:
-			os.unlink(os.path.join(root, f))
-		for d in dirs:
-			shutil.rmtree(os.path.join(root, d))
+    for root, dirs, files in os.walk('/home/kali/Desktop/ragnar/src/drivers/' + folder):
+        for f in files:
+            os.unlink(os.path.join(root, f))
+        for d in dirs:
+            shutil.rmtree(os.path.join(root, d))
 
 def mrBinDirect(lang):
     # Get the file information
@@ -153,11 +153,13 @@ def mrBinDirect(lang):
     print binExtract(fileName)
 
     pause()
-removeFiles('strings')
-removeFiles('hexes')
+
+    removeFiles('strings')
+    removeFiles('hexes')
+
 
 '''
-	Get the file content, convert to a readable hexadecimal format and dump the result on a new file
+    Get the file content, convert to a readable hexadecimal format and dump the result on a new file
 '''
 
 
@@ -177,7 +179,7 @@ def dumpFileContent(fileName):
 
 
 '''
-	Dump the content of the file in hexadecimal
+    Dump the content of the file in hexadecimal
 '''
 
 
@@ -193,7 +195,7 @@ def readFile(fileName):
 
 
 '''
-	Dump the source content
+    Dump the source content
 '''
 
 
@@ -219,7 +221,7 @@ def hexdump(src, length=16, sep='.'):
 
 
 '''
-	Search for printable strings on a file and print the result list on a TXT file for future analysis
+    Search for printable strings on a file and print the result list on a TXT file for future analysis
 '''
 
 
@@ -238,7 +240,7 @@ def findStrings(fileName, size):
 
 
 '''
-	Write the list on a file
+    Write the list on a file
 '''
 
 
@@ -254,7 +256,7 @@ def saveList(fileName, listSource):
 
 
 '''
-	Compare a Md5 from a file with the given one
+    Compare a Md5 from a file with the given one
 '''
 
 
@@ -273,23 +275,23 @@ def compareMd5File(fileName, md5Value):
 
 
 '''
-	Get all printable characters of a file given a minimum size (simulates strings command)
+    Get all printable characters of a file given a minimum size (simulates strings command)
 '''
 
 
 def strings(fileName, min):
-	with open(fileName, "rb") as f:
-		result = ""
-		for c in f.read():
-			if c in string.printable:
-				result += c
-				continue
-			if len(result) >= min:
-				yield result
-				result = ""
-		if len(result) >= min:  # catch result at EOF
-			yield result
+    with open(fileName, "rb") as f:
+        result = ""
+        for c in f.read():
+            if c in string.printable:
+                result += c
+                continue
+            if len(result) >= min:
+                yield result
+                result = ""
+        if len(result) >= min:  # catch result at EOF
+            yield result
 
 
 if __name__ == '__main__':
-	mrBinMenu('pt')
+    mrBinMenu('pt')
