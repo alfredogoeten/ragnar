@@ -93,7 +93,7 @@ def floodWithGET(item):
     global responseLock
 
     # Define the Data Headers using a pre-estabilished file with the parameters
-    headers = open("headersData.txt", "r")
+    headers = open("txt/headersData.txt", "r")
     data = headers.read()
     headers.close()
 

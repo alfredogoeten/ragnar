@@ -527,7 +527,7 @@ def webIMenu(lang):
 '''
 def xss(url):
 	# Read the file with input tests
-	f = open("xss-strings.txt")
+	f = open("txt/xss-strings.txt")
 	inputTests = f.readlines()
 	inputTests = [x.strip() for x in inputTests] 
 

@@ -2,40 +2,55 @@
 	Module Utils
 		Functions to help on the program
 '''
-'''
-	crackme.cenzic.com (PHP app)
-	hackthissite.org
-	testasp.vulnweb.com (IIS, ASP, Microsoft SQL Server), hosted by Acunetix as well
-	testaspnet.vulnweb.com (IIS, ASP.NET, Microsoft SQL Server), also Acunetix
-	Google Gruyere, a webapplication meant to be attacked, hosted by Google. More details on google-gruyere.appspot.com
 
-	inurl:"index.php?cat_id="
-'''
 import httplib, socket, gettext, requests, urllib3
 
 # Define login possibilities
-COMMON_LOGIN_PATHS = ['admin/','login/','administrator/','admin1/','admin2/','admin3/','admin4/','_admin/','usuarios/',
-'usuario/','administrator/','moderator/','webadmin/','adminarea/','bb-admin/','adminLogin/','admin_area/','panel-administracion/','instadmin/',
-'memberadmin/','administratorlogin/','adm/','admin','login','administrator','admin1','admin2','admin3','admin4','_admin','usuarios',
-'usuario','administrator','moderator','webadmin','adminarea','bb-admin','adminLogin','admin_area','panel-administracion','instadmin',
-'memberadmin','administratorlogin','adm','admin/account.php','admin/index.php','admin/login.php','admin/admin.php','admin/account.php',
-'admin_area/admin.php','admin_area/login.php','siteadmin/login.php','siteadmin/index.php','siteadmin/login.html','admin/account.html','admin/index.html','admin/login.html','admin/admin.html',
-'admin_area/index.php','bb-admin/index.php','bb-admin/login.php','bb-admin/admin.php','admin/home.php','admin_area/login.html','admin_area/index.html',
-'admin/controlpanel.php','admin.php','admincp/index.asp','admincp/login.asp','admincp/index.html','admin/account.html','adminpanel.html','webadmin.html',
-'webadmin/index.html','webadmin/admin.html','webadmin/login.html','admin/admin_login.html','admin_login.html','panel-administracion/login.html',
-'admin/cp.php','cp.php','administrator/index.php','administrator/login.php','nsw/admin/login.php','webadmin/login.php','admin/admin_login.php','admin_login.php',
-'administrator/account.php','administrator.php','admin_area/admin.html','pages/admin/admin-login.php','admin/admin-login.php','admin-login.php',
-'bb-admin/index.html','bb-admin/login.html','acceso.php','bb-admin/admin.html','admin/home.html','login.php','modelsearch/login.php','moderator.php','moderator/login.php',
-'moderator/admin.php','account.php','pages/admin/admin-login.html','admin/admin-login.html','admin-login.html','controlpanel.php','admincontrol.php',
-'admin/adminLogin.html','adminLogin.html','admin/adminLogin.html','home.html', 'adminarea/index.html','adminarea/admin.html',
-'webadmin.php','webadmin/index.php','webadmin/admin.php','admin/controlpanel.html','admin.html','admin/cp.html','cp.html','adminpanel.php','moderator.html',
-'administrator/index.html','administrator/login.html','user.html','administrator/account.html','administrator.html','login.html','modelsearch/login.html',
-'moderator/login.html','adminarea/login.html','panel-administracion/index.html','panel-administracion/admin.html','modelsearch/index.html','modelsearch/admin.html',
-'admincontrol/login.html','adm/index.html','adm.html','moderator/admin.html','user.php','account.html','controlpanel.html','admincontrol.html',
-'panel-administracion/login.php','wp-login.php','adminLogin.php','admin/adminLogin.php','home.php','admin.php','adminarea/index.php',
-'adminarea/admin.php','adminarea/login.php','panel-administracion/index.php','panel-administracion/admin.php','modelsearch/index.php',
-'modelsearch/admin.php','admincontrol/login.php','adm/admloginuser.php','admloginuser.php','admin2.php','admin2/login.php','admin2/index.php','usuarios/login.php',
-'adm/index.php','adm.php','affiliate.php','adm_auth.php','memberadmin.php','administratorlogin.php','user/login']
+COMMON_LOGIN_PATHS = ['admin/', 'login/', 'administrator/', 'admin1/', 'admin2/', 'admin3/', 'admin4/', '_admin/',
+                      'usuarios/',
+                      'usuario/', 'administrator/', 'moderator/', 'webadmin/', 'adminarea/', 'bb-admin/', 'adminLogin/',
+                      'admin_area/', 'panel-administracion/', 'instadmin/',
+                      'memberadmin/', 'administratorlogin/', 'adm/', 'admin', 'login', 'administrator', 'admin1',
+                      'admin2', 'admin3', 'admin4', '_admin', 'usuarios',
+                      'usuario', 'administrator', 'moderator', 'webadmin', 'adminarea', 'bb-admin', 'adminLogin',
+                      'admin_area', 'panel-administracion', 'instadmin',
+                      'memberadmin', 'administratorlogin', 'adm', 'admin/account.php', 'admin/index.php',
+                      'admin/login.php', 'admin/admin.php', 'admin/account.php',
+                      'admin_area/admin.php', 'admin_area/login.php', 'siteadmin/login.php', 'siteadmin/index.php',
+                      'siteadmin/login.html', 'admin/account.html', 'admin/index.html', 'admin/login.html',
+                      'admin/admin.html',
+                      'admin_area/index.php', 'bb-admin/index.php', 'bb-admin/login.php', 'bb-admin/admin.php',
+                      'admin/home.php', 'admin_area/login.html', 'admin_area/index.html',
+                      'admin/controlpanel.php', 'admin.php', 'admincp/index.asp', 'admincp/login.asp',
+                      'admincp/index.html', 'admin/account.html', 'adminpanel.html', 'webadmin.html',
+                      'webadmin/index.html', 'webadmin/admin.html', 'webadmin/login.html', 'admin/admin_login.html',
+                      'admin_login.html', 'panel-administracion/login.html',
+                      'admin/cp.php', 'cp.php', 'administrator/index.php', 'administrator/login.php',
+                      'nsw/admin/login.php', 'webadmin/login.php', 'admin/admin_login.php', 'admin_login.php',
+                      'administrator/account.php', 'administrator.php', 'admin_area/admin.html',
+                      'pages/admin/admin-login.php', 'admin/admin-login.php', 'admin-login.php',
+                      'bb-admin/index.html', 'bb-admin/login.html', 'acceso.php', 'bb-admin/admin.html',
+                      'admin/home.html', 'login.php', 'modelsearch/login.php', 'moderator.php', 'moderator/login.php',
+                      'moderator/admin.php', 'account.php', 'pages/admin/admin-login.html', 'admin/admin-login.html',
+                      'admin-login.html', 'controlpanel.php', 'admincontrol.php',
+                      'admin/adminLogin.html', 'adminLogin.html', 'admin/adminLogin.html', 'home.html',
+                      'adminarea/index.html', 'adminarea/admin.html',
+                      'webadmin.php', 'webadmin/index.php', 'webadmin/admin.php', 'admin/controlpanel.html',
+                      'admin.html', 'admin/cp.html', 'cp.html', 'adminpanel.php', 'moderator.html',
+                      'administrator/index.html', 'administrator/login.html', 'user.html', 'administrator/account.html',
+                      'administrator.html', 'login.html', 'modelsearch/login.html',
+                      'moderator/login.html', 'adminarea/login.html', 'panel-administracion/index.html',
+                      'panel-administracion/admin.html', 'modelsearch/index.html', 'modelsearch/admin.html',
+                      'admincontrol/login.html', 'adm/index.html', 'adm.html', 'moderator/admin.html', 'user.php',
+                      'account.html', 'controlpanel.html', 'admincontrol.html',
+                      'panel-administracion/login.php', 'wp-login.php', 'adminLogin.php', 'admin/adminLogin.php',
+                      'home.php', 'admin.php', 'adminarea/index.php',
+                      'adminarea/admin.php', 'adminarea/login.php', 'panel-administracion/index.php',
+                      'panel-administracion/admin.php', 'modelsearch/index.php',
+                      'modelsearch/admin.php', 'admincontrol/login.php', 'adm/admloginuser.php', 'admloginuser.php',
+                      'admin2.php', 'admin2/login.php', 'admin2/index.php', 'usuarios/login.php',
+                      'adm/index.php', 'adm.php', 'affiliate.php', 'adm_auth.php', 'memberadmin.php',
+                      'administratorlogin.php', 'user/login']
 
 # Define common service ports and their names
 COMMON_PORTS = {
@@ -167,7 +182,7 @@ COMMON_PORTS = {
     1109: 'kpop',
     1236: 'bvcontrol',
     1300: 'h323hostcallsc',
-    1433: 'ms-sql-s', # SQL Slammer attacks here
+    1433: 'ms-sql-s',
     1434: 'ms-sql-m',
     1494: 'ica',
     1512: 'wins',
@@ -252,16 +267,12 @@ COMMON_PORTS = {
     26000: 'quake',
     26208: 'wnn6-ds',
     27374: 'asp',
-    # 31337: 'tcpwrapped', # 1337 joke on tcpwrapped protection
     33434: 'traceroute',
     60177: 'tfido',
     60179: 'fido'
 }
 
 
-'''
-    Define common colours
-'''
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -272,115 +283,109 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-'''
-    Stantard response maker
-''' 
+
+def underName(name):
+    return bcolors.UNDERLINE + name + bcolors.ENDC
+
+
 def buildResponse(test, result1, result2):
     return (bcolors.OKGREEN + result1 + bcolors.ENDC) if (test) else (bcolors.WARNING + result2 + bcolors.ENDC)
     pass
 
-'''
-    Clear the screen
-'''
+
 def clear():
-	import os
-	os.system('cls' if os.name=='nt' else 'clear')  # For Windows and Linux/OSX
-	printLine()
+    import os
+    os.system('cls' if os.name == 'nt' else 'clear')  # For Windows and Linux/OSX
+    printLine()
+
+
+def pause():
+    wait = raw_input(_('---Pressione \"ENTER\" para continuar---'))
+
 
 # Just an idea
-def request(metodo,url,flags,excep):
-	requests.get(metodo+url,flags)
-	pass
+def request(method, url, flags, excep):
+    requests.get(method + url, flags)
+    pass
 
-'''
-    Print a separation line
-'''
+
 def printLine():
-	print "=" * 60
-	pass
+    print "=" * 60
+    pass
 
-'''
-    Try to get the login page
-'''
+
 def getLoginPage(site, lang):
-	pageFound=0
-	var2=0
-	hdr = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
-	urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    pageFound = 0
+    var2 = 0
+    hdr = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-	global _
-	_ = lambda s: s
-	
-	print("[+] Escaneando " + site + "...")
-	msg = _('Nenhum caminho encontrado')
-	pageList = []
-	for admin in COMMON_LOGIN_PATHS:
-		admin = admin.replace("\n","")
-		admin = "/" + admin
-		host = site + admin
+    global _
+    _ = lambda s: s
 
-		try:
-			response = requests.get('http://'+host, headers = hdr)
-		except requests.exceptions.SSLError as e:
-			response = requests.get('http://'+host, headers = hdr, verify=False)
-			pass
-		except requests.ConnectionError as a: # No connection (there is nothing on this path)
-			continue
-		sourceCode = response.content
-		var2 = var2 + 1
-		# If there is a page (Code 200) and there is no error on the response, add to the list
-		if (response.status_code == 200) & ((sourceCode.find('<input') != -1)):
-			# Verify repetions
-			if not ((admin in pageList) | ((admin+'/') in pageList)):
-				pageList.append(admin)
-				pageFound = pageFound + 1
-				msg = _('Caminhos comuns encontrados!')
-				pass
-		elif response.status_code == 404:
-			var2 = var2
-			pass
-		# Verify redirection (Code 302)
-		elif response.status_code == 302:
-			path = (response.url).replace('http://'+site,"")
-			path = path.split("?",1)[0]
-			# Verify repetions
-			if not (path in pageList):
-				pageList.append(path)
-				pageFound = pageFound + 1
-				msg = _('Caminhos comuns encontrados!')
-				pass
-			pass
-		response.close()
-		'''	else: # Can treat other cases, but it is not be necessary until now
+    print("[+] Escaneando " + site + "...")
+    msg = _('Nenhum caminho encontrado')
+    pageList = []
+    for admin in COMMON_LOGIN_PATHS:
+        admin = admin.replace("\n", "")
+        admin = "/" + admin
+        host = site + admin
+
+        try:
+            response = requests.get('http://' + host, headers=hdr)
+        except requests.exceptions.SSLError as e:
+            response = requests.get('http://' + host, headers=hdr, verify=False)
+            pass
+        except requests.ConnectionError as a:  # No connection (there is nothing on this path)
+            continue
+        sourceCode = response.content
+        var2 = var2 + 1
+        # If there is a page (Code 200) and there is no error on the response, add to the list
+        if (response.status_code == 200) & (sourceCode.find('<input') != -1):
+            # Verify repetitions
+            if not ((admin in pageList) | ((admin + '/') in pageList)):
+                pageList.append(admin)
+                pageFound = pageFound + 1
+                msg = _('Caminhos comuns encontrados!')
+                pass
+        elif response.status_code == 404:
+            var2 = var2
+            pass
+        # Verify redirection (Code 302)
+        elif response.status_code == 302:
+            path = response.url.replace('http://' + site, "")
+            path = path.split("?", 1)[0]
+            # Verify repetitions
+            if not (path in pageList):
+                pageList.append(path)
+                pageFound = pageFound + 1
+                msg = _('Caminhos comuns encontrados!')
+                pass
+            pass
+        response.close()
+        '''	else: # Can treat other cases, but it is not be necessary until now
 			print "%s %s %s" % ("\t[!] " + host, " Interesting response:", response.status)'''
-	return {'msg':msg,'pageFound':pageFound,'pageList':pageList}
+    return {'msg': msg, 'pageFound': pageFound, 'pageList': pageList}
 
-
-'''
-    Pause function
-'''
-def pause():
-	wait = raw_input(_('---Pressione \"ENTER\" para continuar---'))
-
-'''
-    Return the name of a file with underline
-'''
-def underName(name):
-    return bcolors.UNDERLINE + name + bcolors.ENDC
 
 '''
     Define common user agent to estabilish a connection
 '''
+
+
 def userAgent():
-    uAgent=[]
-    uAgent.append("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14")
-    uAgent.append("Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0")
-    uAgent.append("Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090913 Firefox/3.5.3")
-    uAgent.append("Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)")
-    uAgent.append("Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.7 (KHTML, like Gecko) Comodo_Dragon/16.1.1.0 Chrome/16.0.912.63 Safari/535.7")
-    uAgent.append("Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)")
-    uAgent.append("Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.1) Gecko/20090718 Firefox/3.5.1")
+    uAgent = ["Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14",
+              "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0",
+              "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090913 Firefox/3.5.3",
+              "Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR "
+              "3.5.30729)",
+              "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.7 (KHTML, like Gecko) Comodo_Dragon/16.1.1.0 "
+              "Chrome/16.0.912.63 Safari/535.7",
+              "Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR "
+              "3.5.30729)",
+              "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.1) Gecko/20090718 Firefox/3.5.1"]
     return uAgent
+
 
 global _
 _ = lambda s: s

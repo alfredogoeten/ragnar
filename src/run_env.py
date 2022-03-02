@@ -14,6 +14,7 @@ pip2 install netifaces
 pip2 install backports.ssl_match_hostname
 pip2 install cryptography
 sudo apt-get install libssl-dev libffi-dev
+sudo apt-get install libmagic1
 '''
 
 process = subprocess.Popen('/bin/bash', stdin=subprocess.PIPE, stdout=subprocess.PIPE)
