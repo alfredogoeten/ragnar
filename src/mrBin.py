@@ -141,7 +141,7 @@ def mrBinDirect(lang):
 	# [1] Verify the MD5 signature with a MD5 file
 	printLine()
 	print '[1] '+ (_('Verificacao do MD5'))
-	print _('Procurando arquivo \'{}\'').format(underName(fileName+'.md5'))
+	print _('Procurando arquivo \'{}\'').format(underName(pathFolder+fileName+'.md5'))
 	print compareMd5File(fileName+'.md5',md5Value)
 
 	# [2] Finding printable strings on the bin file
