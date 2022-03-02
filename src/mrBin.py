@@ -8,7 +8,7 @@
 	####
 '''
 
-import hashlib, magic, shutil, string, uefi_firmware, os, glob
+import hashlib, magic, shutil, string, uefi_firmware, os, shutil
 
 # Utils functions
 from utils import bcolors
@@ -108,9 +108,11 @@ def mrBinMenu(lang):
 	
 '''
 def removeFiles(folder):
-	files = glob.glob(pathFolder + folder +'/*')
-	for f in files:
-		os.remove(f)
+	for root, dirs, files in os.walk('/home/kali/Desktop/ragnar/src/drivers/' + folder):
+		for f in files:
+			os.unlink(os.path.join(root, f))
+		for d in dirs:
+			shutil.rmtree(os.path.join(root, d))
 
 def mrBinDirect(lang):
     # Get the file information
