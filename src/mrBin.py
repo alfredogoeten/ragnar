@@ -18,6 +18,7 @@ import uefi_firmware
 # Utils functions
 from utils import bcolors
 from utils import buildResponse
+from utils import clear
 from utils import pause
 from utils import printLine
 from utils import underName
@@ -72,8 +73,6 @@ def getType(fileName):
 
 
 def mrBinMenu(lang):
-    # Import the clear function
-    global clear
 
     # Change the software language
     import gettext
