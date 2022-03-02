@@ -96,9 +96,9 @@ def mrBinMenu(lang):
         print(_('Firmware Pentest'))
         opt = int(raw_input(_("0 - Voltar para o Menu Principal\n1 - Verificar Arquivo de Firmware\n")))
         if opt == 0:
-			removeFiles(strings)
-			removeFiles(hexes)
-            return
+			removeFiles('strings')
+			removeFiles('hexes')
+			return
         if opt in menuOpts:
             subModule[menuOpts[opt]](lang)
         else:
