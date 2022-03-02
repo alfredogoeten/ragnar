@@ -7,7 +7,7 @@
 	2 - Install pyOpenSSL
 	
 	.additional: If the Protocol Scan does not work on Windows, copy the file "_ssl.lib" from the project "\SSL" 
-					subfolder to the hex "C:\(...)\Python27\Libs\""
+					subfolder to the hexes "C:\(...)\Python27\Libs\""
 	
 	### This will make OpenSSL handle the SSL requisitions
 '''

@@ -6,7 +6,7 @@
 	1 - Install Scapy 2.3.3 (with Arch)
 
 	2 - If you are using Windows and get the "gen not defined error":
-	- Go to the hex Python27\Lib\site-packages\scapy\arch\windows\
+	- Go to the hexes Python27\Lib\site-packages\scapy\arch\windows\
 	- Put this on the beginning of the 'compatibility.py' file:
 
 	from scapy.base_classes import Gen, SetGen

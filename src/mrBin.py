@@ -8,7 +8,7 @@
 	####
 '''
 
-import hashlib, magic, shutil, string, uefi_firmware
+import hashlib, magic, shutil, string, uefi_firmware, os, glob
 
 # Utils functions
 from utils import bcolors
@@ -96,6 +96,8 @@ def mrBinMenu(lang):
         print(_('Firmware Pentest'))
         opt = int(raw_input(_("0 - Voltar para o Menu Principal\n1 - Verificar Arquivo de Firmware\n")))
         if opt == 0:
+			removeFiles(strings)
+			removeFiles(hexes)
             return
         if opt in menuOpts:
             subModule[menuOpts[opt]](lang)
@@ -107,7 +109,10 @@ def mrBinMenu(lang):
 '''
 	
 '''
-
+def removeFiles(folder):
+	files = glob.glob(pathFolder + folder+'/*')
+	for f in files:
+		os.remove(f)
 
 def mrBinDirect(lang):
     # Get the file information
@@ -158,11 +163,11 @@ def dumpFileContent(fileName):
     # Get the file content
     fileContent = readFile(pathFolder + fileName)
 
-    # Convert the content of the file to a readable hex format
+    # Convert the content of the file to a readable hexes format
     hexContent = hexdump(fileContent)
 
     # Dump the result on a new file
-    resultFile = pathFolder + 'hex/{}.txt'.format(fileName)
+    resultFile = pathFolder + 'hexes/{}.txt'.format(fileName)
     saveList(resultFile, hexContent)
 
     # Return the result
@@ -198,7 +203,7 @@ def hexdump(src, length=16, sep='.'):
     # Start the result as empty
     lines = []
 
-    # Read the content, convert to hex and save on a list
+    # Read the content, convert to hexes and save on a list
     for c in xrange(0, len(src), length):
         chars = src[c:c + length]
         hex = ' '.join(["%02x" % ord(x) for x in chars])
